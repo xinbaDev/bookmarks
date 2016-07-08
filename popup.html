@@ -1,11 +1,52 @@
 
-<html>
+
+<html ng-app="bookmark">
 <head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="popup.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body style="width: 400px">
-  <div>Search Bookmarks: <input id="search"></div>
-  <div id="bookmarks" ></div>
+<body class="body">
+
+	<header class="imghead">
+		<div class="container">
+			<h1 class="logo"></h1>  
+		</div>
+	</header>
+
+
+	<div>  
+		<div class="bgimage">
+			<input id="search" class="searchBox" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
+				<button class="btn btn-primary btn-sm" ng-click="searchText=''">Clear</button>
+		</div>
+	
+  	<div ng-controller="bookmarkCtrl">
+  		<div ng-if="isNotEmpty(searchText)">
+  			<table class="tableFixWidth">
+ 					<tr ng-repeat="bookmark in bookmarkLists|filter:searchText">
+ 				    <td calss="bookmarkTitle"> 
+ 				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+ 				    </td>
+   					<td class="dateAdded">
+   						{{bookmark.getDate()}}
+   					</td>
+	    		</tr>
+	    	</table>
+  		</div>
+		</div>
+	</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	
+  <script src="js/bootstrap.min.js"></script>
+
+	<script src="js/utility.js"></script>
+  <script src="js/bookmarkModel.js"></script>
+  <script src="js/popup.js"></script>
+  <script src="js/bookmarkController.js"></script>
+ 
+
+
 </body>
 </html>
