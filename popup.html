@@ -7,11 +7,16 @@
 </head>
 <body class="body">
 
-	<header class="imghead">
+	<div class="imghead">
 		<div class="container">
-			<h1 class="logo"></h1>  
+			<div class="row">
+				<div class="col-xs-1 logo"></div>
+				<div class="col-xs-10">
+					<div class="test"></div>
+				</div>
+			</div>
 		</div>
-	</header>
+	</div>
 
 
 	<div>  
@@ -22,7 +27,9 @@
 	
   	<div ng-controller="bookmarkCtrl">
   		<div ng-if="isNotEmpty(searchText)">
-  			<table class="tableFixWidth">
+  			<table>
+					<td class="bookmarkTitle">Title</td>
+					<td class="dateAdded">DateAdded</td>
  					<tr ng-repeat="bookmark in bookmarkLists|filter:searchText">
  				    <td calss="bookmarkTitle"> 
  				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
