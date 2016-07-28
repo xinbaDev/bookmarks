@@ -3,7 +3,9 @@
 <html ng-app="bookmark">
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome-4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body class="body">
 
@@ -19,18 +21,22 @@
 	</div>
 
 
-	<div>  
-		<div class="bgimage">
-			<input id="search" class="searchBox" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
-				<button class="btn btn-primary btn-sm" ng-click="searchText=''">Clear</button>
-		</div>
+ 
+				<div class="input-group">
+
+						<div class="input-group-addon"><i class="fa fa-search"></i></div>
+						<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
+						<button class="btn btn-primary btn-sm" ng-click="searchText=''">Clear</button>
+
+				</div>
+
 	
   	<div ng-controller="bookmarkCtrl">
   		<div ng-if="isNotEmpty(searchText)" class="scrollable">
   			<table>
 					<td class="bookmarkTitle">Title</td>
-					<td class="dateAdded">DateAdded</td>
- 					<tr ng-repeat="bookmark in bookmarkLists|filter:searchText">
+					<td class="dateAdded" ng-click="sortReverse = !sortReverse">DateAdded</td>
+ 				<tr ng-repeat="bookmark in bookmarkLists|orderBy:'dateAdded':sortReverse|filter:searchText">
  				    <td calss="bookmarkTitle"> 
  				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
  				    </td>
@@ -40,8 +46,8 @@
 	    		</tr>
 	    	</table>
   		</div>
-		</div>
 	</div>
+	
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

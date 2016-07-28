@@ -18,6 +18,8 @@ app.controller('bookmarkCtrl', ['$scope','bookmarkManager', function($scope,book
     $scope.openLink = function(url){
        chrome.tabs.create({url: url});
     }
+
+    $scope.sortReverse = true;
 }]);
 
 
