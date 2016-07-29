@@ -20,8 +20,7 @@ bookmarkModel = (function(){
 
     this.recurGetChildren = function(bookMark){
         if (bookMark.hasOwnProperty("url")){
-
-            var book = new Book(bookMark.url,bookMark.title,new Date(bookMark.dateAdded));
+            var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded));
             _this.bookObjList.push(book);
         }
 
@@ -35,20 +34,31 @@ bookmarkModel = (function(){
     this.getBookmarks = function(booklists){
       //console.log(booklists[0]);
       _this.recurGetChildren(booklists[0]);
-      console.log(_this.bookObjList);
     }
 
     this.returnBookmarks = function(){
       return this.bookObjList;
     }
 
+    this.deleteBookmarks = function(id){
+      _this.bookObjList.forEach(function(d,i){
+        if(d.id == id){
+          _this.bookObjList.splice(i,1);
+        }
+      });
+    }
+
   }
 
-  var Book = function(url,title,dateAdded){
-
+  var Book = function(id, url, title, dateAdded){
+    this.id           = id;
     this.url          = url;
     this.title        = title;
     this.dateAdded    = dateAdded;
+
+    this.getID = function(){
+      return this.id;
+    }
 
     this.getDate = function(){
       var day   = this.dateAdded.getDate();

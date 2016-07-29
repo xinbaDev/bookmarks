@@ -5,10 +5,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome-4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/ngDialog.css">
+<link rel="stylesheet" href="css/ngDialog-theme-default.css">
 
 </head>
 <body class="body">
-
 	<div class="imghead">
 		<div class="container">
 			<div class="row">
@@ -52,8 +53,12 @@
 			</td>
 
 			<tr ng-repeat="bookmark in bookmarkLists|orderBy:'dateAdded':sortReverse|filter:searchText">
-			    <td class="title_bookmark"> 
+			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
+			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
 			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
+			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+			    	</div>
 			    </td>
 				<td class="date_bookmark">
 					{{bookmark.getDate()}}
@@ -65,8 +70,10 @@
 </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	
+  <script type="text/javascript" src="js/ngDialog.js"></script>
   <script src="js/bootstrap.min.js"></script>
 
   <script src="js/utility.js"></script>
