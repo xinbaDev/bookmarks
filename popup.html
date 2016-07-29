@@ -25,8 +25,16 @@
 				<div class="input-group">
 
 						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-						<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
-						<button class="btn btn-primary btn-sm" ng-click="searchText=''">Clear</button>
+						<table>
+
+							<td>
+								<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
+							</td>
+							<td>
+								<button class="btn btn-primary" ng-click="searchText=''">Clear</button>
+							</td>
+
+						</table>
 
 				</div>
 
@@ -54,7 +62,7 @@
 	
   <script src="js/bootstrap.min.js"></script>
 
-	<script src="js/utility.js"></script>
+  <script src="js/utility.js"></script>
   <script src="js/bookmarkModel.js"></script>
   <script src="js/popup.js"></script>
   <script src="js/bookmarkController.js"></script>
