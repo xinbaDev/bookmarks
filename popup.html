@@ -14,48 +14,55 @@
 			<div class="row">
 				<div class="col-xs-1 logo"></div>
 				<div class="col-xs-10">
-					<div class="test"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
- 
-				<div class="input-group">
+<div ng-controller="bookmarkCtrl">
+	<div class="input-group">
 
-						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-						<table>
+			<div class="input-group-addon"><i class="fa fa-search"></i></div>
+			<table>
 
-							<td>
-								<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
-							</td>
-							<td>
-								<button class="btn btn-primary" ng-click="searchText=''">Clear</button>
-							</td>
+				<td>
+					<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="Search bookmarks">
+				</td>
+				<td>
+					<button class="btn btn-primary" ng-click="focusOnText();searchText=''">Clear</button>
+				</td>
 
-						</table>
+			</table>
 
-				</div>
+	</div>
 
 	
-  	<div ng-controller="bookmarkCtrl">
-  		<div ng-if="isNotEmpty(searchText)" class="scrollable">
-  			<table>
-					<td class="bookmarkTitle">Title</td>
-					<td class="dateAdded" ng-click="sortReverse = !sortReverse">DateAdded</td>
- 				<tr ng-repeat="bookmark in bookmarkLists|orderBy:'dateAdded':sortReverse|filter:searchText">
- 				    <td calss="bookmarkTitle"> 
- 				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
- 				    </td>
-   					<td class="dateAdded">
-   						{{bookmark.getDate()}}
-   					</td>
-	    		</tr>
-	    	</table>
-  		</div>
+
+	<div ng-if="isNotEmpty(searchText)" class="scrollable">
+		<table>
+			<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+				<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+	            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+			</td>
+
+			<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+				<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+	            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+			</td>
+
+			<tr ng-repeat="bookmark in bookmarkLists|orderBy:'dateAdded':sortReverse|filter:searchText">
+			    <td class="title_bookmark"> 
+			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+			    </td>
+				<td class="date_bookmark">
+					{{bookmark.getDate()}}
+				</td>
+			</tr>
+		</table>
 	</div>
 	
+</div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

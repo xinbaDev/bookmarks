@@ -19,10 +19,11 @@ app.controller('bookmarkCtrl', ['$scope','bookmarkManager', function($scope,book
        chrome.tabs.create({url: url});
     }
 
-    $scope.focusOnText = function(asd){
-        console.log("asd");
+    $scope.focusOnText = function(){
+        $('#search').focus();
     }
 
+    $scope.sortType    = 'dateAdded';
     $scope.sortReverse = true;
 
 }]);
