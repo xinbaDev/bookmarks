@@ -8,6 +8,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     $scope.sortType      = 'dateAdded';
     $scope.sortReverse   = true;
 
+
     $scope.isNotEmpty = function(searchText){
         if (searchText.length!=0){
             return true;
@@ -26,17 +27,17 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     }
 
     $scope.deleteBookmarks = function(id){
-        ngDialog.open({template: 'confirm.html'});
+        ngDialog.openConfirm({template: 'confirm.html'}).then(       
+            function(value) {
+                bookmarkManager.deleteBookmarks(id);
+                chrome.bookmarks.remove(id);
+                ngDialog.close();
+            },
+            function(value) {
+                ngDialog.close();
+            });
     }
 
-    $scope.comfirmDelete = function(id){
-        bookmarkManager.deleteBookmarks(id);
-        ngDialog.close();
-    }
-
-    $scope.cancelDelete = function(){
-        ngDialog.close();
-    }
 
 /*    $scope.mouseEnter = function(id){
         $('#moreControlOpt_'+id).css("color", "lightblue");
@@ -53,9 +54,3 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
 
 }]);
 
-
-/*app.filter('filter', function($scope) {
-    return function(x) {
-        $scope.searchText
-    };
-});*/
