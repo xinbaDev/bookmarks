@@ -18,22 +18,34 @@ bookmarkModel = (function(){
     this.bookObjList = [];
     var _this = this;
 
-    this.recurGetChildren = function(bookMark){
+    this._recurGetChildren = function(bookMark){
         if (bookMark.hasOwnProperty("url")){
-            var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded));
+            var importance = _this._getImportance(bookMark.title);
+            if(importance) bookMark.title = bookMark.title.slice(0,-15);
+            
+            var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded), importance);
             _this.bookObjList.push(book);
         }
 
         if (bookMark.hasOwnProperty("children")){
             bookMark.children.forEach(function(book){
-              _this.recurGetChildren(book);
+              _this._recurGetChildren(book);
             })
         }
     }
 
+    this._getImportance = function(title){
+      var mark = title.slice(title.length-15, title.length);
+      if(mark == "[__IMPORTANT__]"){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
     this.getBookmarks = function(booklists){
       //console.log(booklists[0]);
-      _this.recurGetChildren(booklists[0]);
+      _this._recurGetChildren(booklists[0]);
     }
 
     this.returnBookmarks = function(){
@@ -48,13 +60,18 @@ bookmarkModel = (function(){
       });
     }
 
+    this.returnBookById = function(id){
+
+    }
+
   }
 
-  var Book = function(id, url, title, dateAdded){
+  var Book = function(id, url, title, dateAdded, isImportant){
     this.id           = id;
     this.url          = url;
     this.title        = title;
     this.dateAdded    = dateAdded;
+    this.isImportant  = isImportant;
 
     this.getID = function(){
       return this.id;

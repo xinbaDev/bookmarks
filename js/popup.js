@@ -15,4 +15,19 @@ document.addEventListener('DOMContentLoaded', function () {
   $('#search').focus() ;
 });
 
+document.querySelector('#bookmark-options').addEventListener("click", function() {
+  if (chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  } else {
+    window.open(chrome.runtime.getURL('options.html'));
+  }
+});
+
+chrome.storage.sync.get({
+	width: 300,
+	height: 500
+}, function(items) {
+	$('body').width(items.width);
+  	$('#scrollable').css('max-height',400);  	
+});
 

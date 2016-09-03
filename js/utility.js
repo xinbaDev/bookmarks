@@ -1,3 +1,4 @@
+
 var utility = (function(){ 
 	var adjustHtmlSize = function(){
 	  var hegiht = $('.container').height() + 30;

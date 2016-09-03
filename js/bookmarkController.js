@@ -12,8 +12,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     $scope.isNotEmpty = function(searchText){
         if (searchText.length!=0){
             return true;
-        }
-        else{
+        }else{
             return false;
         }
     }
@@ -36,6 +35,27 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
             function(value) {
                 ngDialog.close();
             });
+    }
+
+    $scope.getNumberOfBookMarks = function(){
+        if($scope.bookmarkLists.length <= 1){
+            return "Search in your bookmarks";
+        }else{
+            return "Search in your "+ $scope.bookmarkLists.length + " bookmarks";
+        }
+    }
+
+    $scope.changeImportance = function(book){
+
+        var id = book.getID();
+
+        if(book.isImportant){
+            chrome.bookmarks.update(id,{"title":book.title});
+        }else{
+            chrome.bookmarks.update(id,{"title":book.title+"[__IMPORTANT__]"});
+        }
+
+        book.isImportant=!book.isImportant;
     }
 
 
