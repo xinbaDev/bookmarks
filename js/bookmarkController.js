@@ -10,8 +10,13 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     
     $scope.sortType      = 'dateAdded';
     $scope.sortReverse   = true;
+    $scope.bookmarkLists = [];
 
-    chrome.bookmarks.getTree(getBookmarksCallback)
+    if(bookmarkManager.numOfBooks()==0){
+        console.log("getbookmarks");
+        chrome.bookmarks.getTree(getBookmarksCallback)
+    }
+    
 
     function getBookmarksCallback(booklist){
         bookmarkManager.getBookmarks(booklist);

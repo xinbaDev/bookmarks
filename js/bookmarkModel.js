@@ -19,14 +19,10 @@ bookmarkModel = (function(){
     var _this = this;
 
     this.getBookmarks = function(booklists){
-      //console.log(booklists[0]);
-      console.log("start get bookmarks");
       _this._recurGetChildren(booklists[0]);
-      console.log("get bookmarks done");
     }
 
     this.returnBookmarks = function(){
-      console.log("return bookmarks");
       return this.bookObjList;
     }
 
