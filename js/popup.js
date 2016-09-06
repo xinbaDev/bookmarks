@@ -3,12 +3,6 @@
 // found in the LICENSE file.
 
 
-
-var bookmarkManager = new bookmarkModel.bookmark();
-
-//get all the bookmarks
-chrome.bookmarks.getTree(bookmarkManager.getBookmarks);
-
 utility.adjustHtmlSize();
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -28,6 +22,6 @@ chrome.storage.sync.get({
 	height: 500
 }, function(items) {
 	$('body').width(items.width);
-  	$('#scrollable').css('max-height',400);  	
+  $('#bookmark_scrollable').height(items.height);
 });
 

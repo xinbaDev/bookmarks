@@ -1,13 +1,24 @@
 
+var bookmarkManager = new bookmarkModel.bookmark();
+
+
 var app = angular.module('bookmark', ['ngDialog']);
 
 app.constant('bookmarkManager', bookmarkManager);
 
 app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', function($scope,bookmarkManager,ngDialog) {
-    $scope.bookmarkLists = bookmarkManager.returnBookmarks();
+    
     $scope.sortType      = 'dateAdded';
     $scope.sortReverse   = true;
 
+    chrome.bookmarks.getTree(getBookmarksCallback)
+
+    function getBookmarksCallback(booklist){
+        bookmarkManager.getBookmarks(booklist);
+        $scope.$apply(function(){
+            $scope.bookmarkLists = bookmarkManager.returnBookmarks();
+        });
+    }
 
     $scope.isNotEmpty = function(searchText){
         if (searchText.length!=0){
@@ -38,10 +49,11 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     }
 
     $scope.getNumberOfBookMarks = function(){
-        if($scope.bookmarkLists.length <= 1){
+        var num = bookmarkManager.numOfBooks();
+        if(num <= 1){
             return "Search in your bookmarks";
         }else{
-            return "Search in your "+ $scope.bookmarkLists.length + " bookmarks";
+            return "Search in your "+ num + " bookmarks";
         }
     }
 

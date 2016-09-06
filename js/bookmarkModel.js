@@ -18,6 +18,30 @@ bookmarkModel = (function(){
     this.bookObjList = [];
     var _this = this;
 
+    this.getBookmarks = function(booklists){
+      //console.log(booklists[0]);
+      console.log("start get bookmarks");
+      _this._recurGetChildren(booklists[0]);
+      console.log("get bookmarks done");
+    }
+
+    this.returnBookmarks = function(){
+      console.log("return bookmarks");
+      return this.bookObjList;
+    }
+
+    this.deleteBookmarks = function(id){
+      _this.bookObjList.forEach(function(d,i){
+        if(d.id == id){
+          _this.bookObjList.splice(i,1);
+        }
+      });
+    }
+
+    this.numOfBooks = function(){
+      return this.bookObjList.length;
+    }
+
     this._recurGetChildren = function(bookMark){
         if (bookMark.hasOwnProperty("url")){
             var importance = _this._getImportance(bookMark.title);
@@ -41,27 +65,6 @@ bookmarkModel = (function(){
       }else{
         return false;
       }
-    }
-
-    this.getBookmarks = function(booklists){
-      //console.log(booklists[0]);
-      _this._recurGetChildren(booklists[0]);
-    }
-
-    this.returnBookmarks = function(){
-      return this.bookObjList;
-    }
-
-    this.deleteBookmarks = function(id){
-      _this.bookObjList.forEach(function(d,i){
-        if(d.id == id){
-          _this.bookObjList.splice(i,1);
-        }
-      });
-    }
-
-    this.returnBookById = function(id){
-
     }
 
   }
