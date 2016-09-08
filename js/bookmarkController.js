@@ -13,8 +13,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     $scope.bookmarkLists = [];
 
     if(bookmarkManager.numOfBooks()==0){
-        console.log("getbookmarks");
-        chrome.bookmarks.getTree(getBookmarksCallback)
+        chrome.bookmarks.getTree(getBookmarksCallback);
     }
     
 
