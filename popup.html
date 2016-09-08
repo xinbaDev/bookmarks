@@ -52,7 +52,7 @@
 	            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
 			</td>
 
-			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:searchText">
+			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:{title:searchText}">
 			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
 			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
 			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
