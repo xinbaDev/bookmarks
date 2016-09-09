@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="css/ngDialog.css">
 <link rel="stylesheet" href="css/ngDialog-theme-default.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/toggle.css">
+
 
 </head>
 <body class="body">
@@ -22,9 +24,25 @@
 
 
 <div ng-controller="bookmarkCtrl">
-	<div class="input-group">
 
-			<div class="input-group-addon"><i class="fa fa-search"></i></div>
+	<div class="input-group">
+				
+
+			<div class="input-group-addon btn" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
+		
+				<i class="fa fa-search"></i>
+				<span class="caret"></span>
+
+			</div>
+
+			<div class="toggle-menu" ng-show="isOpen">
+				    <li><a class="btn">Title</a></li>
+				    <li><a class="btn">URL</a></li>
+				    <li><a class="btn">Title+URL</a></li>
+				    <li><a class="btn">Time</a></li>
+			</div>
+
+
 			<table>
 
 				<td>
@@ -35,7 +53,7 @@
 				</td>
 
 			</table>
-
+			
 	</div>
 
 	
@@ -76,7 +94,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/ngDialog.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+<!--   <script src="js/bootstrap.min.js"></script>  -->
   <script src="js/utility.js"></script>
   <script src="js/bookmarkModel.js"></script>
   <script src="js/popup.js"></script>
