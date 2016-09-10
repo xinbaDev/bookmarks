@@ -11,6 +11,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     $scope.sortType      = 'dateAdded';
     $scope.sortReverse   = true;
     $scope.bookmarkLists = [];
+    $scope.titleChecked = true;
 
     if(bookmarkManager.numOfBooks()==0){
         chrome.bookmarks.getTree(getBookmarksCallback);
@@ -73,6 +74,51 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
 
         book.isImportant=!book.isImportant;
     }
+
+
+    $scope.titleClick = function(){
+        $scope.titleChecked = true;
+        $scope.urlChecked = false;
+        $scope.timeChecked = false;
+        $scope.isOpen = false;
+        $scope.filterField = "title";
+    }
+
+    $scope.urlClick = function(){
+        $scope.titleChecked = false;
+        $scope.urlChecked = true;
+        $scope.timeChecked = false;
+        $scope.isOpen = false;
+        $scope.filterField = "url";
+    }
+
+    $scope.timeClick = function(){
+        $scope.titleChecked = false;
+        $scope.urlChecked = false;
+        $scope.timeChecked = true;
+        $scope.isOpen = false;
+        $scope.filterField = "time";
+    }
+
+
+    $scope.bySearchText = function(searchText) {
+
+
+        if($scope.titleChecked){
+            return function(bookmark) {
+                return bookmark.title.search(/searchText/i);
+            }
+        }else if($scope.urlChecked){
+            return function(bookmark) {
+                return bookmark.url.search(/searchText/i);
+            }
+        }else{
+            return function(bookmark) {
+                return bookmark.dataAdded == searchText;
+            }
+        }
+
+}
 
 
 /*    $scope.mouseEnter = function(id){
