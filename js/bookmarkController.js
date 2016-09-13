@@ -42,7 +42,10 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
     }
 
     $scope.deleteBookmarks = function(id){
-        ngDialog.openConfirm({template: 'confirm.html'}).then(       
+
+        var paddingTop = $('body').height()/2;
+
+        ngDialog.openConfirm({template: 'confirm.html', paddingTop: paddingTop}).then(       
             function(value) {
                 bookmarkManager.deleteBookmarks(id);
                 chrome.bookmarks.remove(id);
@@ -103,14 +106,13 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
 
     $scope.bySearchText = function(searchText) {
 
-
         if($scope.titleChecked){
             return function(bookmark) {
-                return bookmark.title.search(/searchText/i);
+                return !(bookmark.title.toLowerCase().indexOf(searchText)==-1);
             }
         }else if($scope.urlChecked){
             return function(bookmark) {
-                return bookmark.url.search(/searchText/i);
+                return !(bookmark.url.toLowerCase().indexOf(searchText)==-1);
             }
         }else{
             return function(bookmark) {
