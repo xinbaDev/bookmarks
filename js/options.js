@@ -1,6 +1,8 @@
+
+
 function save_options() {
-  var width = document.getElementById('width').value;
-  var height = document.getElementById('height').value;
+  var width = document.getElementById('window_width').value;
+  var height = document.getElementById('window_height').value;
   chrome.storage.sync.set({
     width: width,
     height: height
@@ -21,10 +23,19 @@ function restore_options() {
     width: 200,
     height: 500
   }, function(items) {
-    document.getElementById('width').value = items.width;
-    document.getElementById('height').value = items.height;
+    document.getElementById('window_width').value = items.width;
+    document.getElementById('window_height').value = items.height;
   });
 }
+
 document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click',
-    save_options);
+document.getElementById('save').addEventListener('click',save_options);
+
+
+$('#window_width').on("input change", function() {
+    $('#width_value').text(this.value);
+});
+
+$('#window_height').on("input change", function() {
+    $('#height_value').text(this.value);
+});

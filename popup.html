@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/ngDialog-theme-default.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/toggle.css">
-
+<link rel="stylesheet" href="css/daterangepicker.css">
 
 </head>
 <body class="body">
@@ -35,6 +35,11 @@
 
 			</div>
 
+
+			<div id="reportrange" ng-show="timeChecked" class="pull-right bookmark-calendar" >
+			    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
+			</div>
+
 			<div class="toggle-menu" ng-show="isOpen">
 				    <li><a class="btn" ng-click="titleClick()"><i ng-show="titleChecked" class="fa fa-check"></i>Title</a></li>
 				    <li><a class="btn" ng-click="urlClick()"><i ng-show="urlChecked" class="fa fa-check"></i>URL</a></li>
@@ -42,7 +47,7 @@
 			</div>
 
 
-			<table>
+			<table ng-show="!timeChecked">
 
 				<td>
 					<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}">
@@ -99,8 +104,8 @@
   <script src="js/bookmarkModel.js"></script>
   <script src="js/popup.js"></script>
   <script src="js/bookmarkController.js"></script>
- 
-
+  <script src="js/moment.min.js"></script>
+  <script src="js/daterangepicker.js"></script>
 
 </body>
 </html>
