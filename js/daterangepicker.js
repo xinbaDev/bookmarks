@@ -405,7 +405,7 @@
         //
         // event listeners
         //
-
+        
         this.container.find('.calendar')
             .on('click.daterangepicker', '.prev', $.proxy(this.clickPrev, this))
             .on('click.daterangepicker', '.next', $.proxy(this.clickNext, this))
@@ -451,6 +451,7 @@
         }
 
     };
+
 
     DateRangePicker.prototype = {
 

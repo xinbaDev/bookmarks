@@ -93,19 +93,57 @@
 			
 		</table>
 	</div>
+
+	<div ng-if="timeChecked" id="bookmark_scrollable">
+		<table>
+			<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+				<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+	            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+			</td>
+
+			<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+				<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+	            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+			</td>
+			
+			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchDate()">
+			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
+			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
+			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
+					
+					<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+
+			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+					<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
+			    	</div>
+			    </td>
+				<td class="date_bookmark">
+					{{bookmark.getDate()}}
+				</td>
+			</tr>
+
+			
+		</table>
+	</div>
+
+
+
 	
 </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  
+  <script src="js/moment.min.js"></script>
+  <script src="js/daterangepicker.js"></script>
   <script src="js/ngDialog.js"></script>
-<!--   <script src="js/bootstrap.min.js"></script>  -->
+
   <script src="js/utility.js"></script>
   <script src="js/bookmarkModel.js"></script>
   <script src="js/popup.js"></script>
   <script src="js/bookmarkController.js"></script>
-  <script src="js/moment.min.js"></script>
-  <script src="js/daterangepicker.js"></script>
+
 
 </body>
 </html>

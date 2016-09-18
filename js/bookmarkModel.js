@@ -16,6 +16,7 @@ bookmarkModel = (function(){
   var BookList = function(){
     
     this.bookObjList = [];
+
     var _this = this;
 
     this.getBookmarks = function(booklists){

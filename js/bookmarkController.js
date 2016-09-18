@@ -6,14 +6,14 @@ var app = angular.module('bookmark', ['ngDialog']);
 
 app.constant('bookmarkManager', bookmarkManager);
 
-app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', function($scope,bookmarkManager,ngDialog) {
+app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function($scope,bookmarkManager,searchDate,ngDialog) {
     
     $scope.sortType      = 'dateAdded';
-    $scope.sortReverse   = true;
     $scope.bookmarkLists = [];
-    $scope.titleChecked = true;
+    $scope.titleChecked  = true;
+    $scope.sortReverse   = true;
 
-    if(bookmarkManager.numOfBooks()==0){
+    if(bookmarkManager.numOfBooks() == 0){
         chrome.bookmarks.getTree(getBookmarksCallback);
     }
     
@@ -25,13 +25,15 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
         });
     }
 
+
     $scope.isNotEmpty = function(searchText){
-        if (searchText.length!=0){
+        if(searchText.length != 0){
             return true;
         }else{
             return false;
         }
     }
+
 
     $scope.openLink = function(url){
        chrome.tabs.create({url: url});
@@ -61,8 +63,11 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
         if(num <= 1){
             return "Search in your bookmarks";
         }else{
-            return "Search in your "+ num + " bookmarks";
+            return "Search in your " + num + " bookmarks";
         }
+
+
+
     }
 
     $scope.changeImportance = function(book){
@@ -72,7 +77,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
         if(book.isImportant){
             chrome.bookmarks.update(id,{"title":book.title});
         }else{
-            chrome.bookmarks.update(id,{"title":book.title+"[__IMPORTANT__]"});
+            chrome.bookmarks.update(id,{"title":book.title + "[__IMPORTANT__]"});
         }
 
         book.isImportant=!book.isImportant;
@@ -101,18 +106,19 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
         $scope.timeChecked = true;
         $scope.isOpen = false;
         $scope.filterField = "time";
-    }
+        
 
+    }
 
     $scope.bySearchText = function(searchText) {
 
         if($scope.titleChecked){
             return function(bookmark) {
-                return !(bookmark.title.toLowerCase().indexOf(searchText)==-1);
+                return !(bookmark.title.toLowerCase().indexOf(searchText) == -1);
             }
         }else if($scope.urlChecked){
             return function(bookmark) {
-                return !(bookmark.url.toLowerCase().indexOf(searchText)==-1);
+                return !(bookmark.url.toLowerCase().indexOf(searchText) == -1);
             }
         }else{
             return function(bookmark) {
@@ -120,21 +126,47 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', functio
             }
         }
 
-}
-
-
-/*    $scope.mouseEnter = function(id){
-        $('#moreControlOpt_'+id).css("color", "lightblue");
-
     }
 
-    $scope.mouseLeave = function(id){
-        $('#moreControlOpt_'+id).css("color", "");
+    $scope.bySearchDate = function() {
 
+        return function(bookmark) {
+                return (($scope.startDate < bookmark.dateAdded) && (bookmark.dateAdded <= $scope.endDate));
+        }
     }
-*/
 
 
+
+
+
+    var start = moment().subtract(7, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+
+        $('#reportrange span').html(start.format('D MMMM , YYYY') + ' - ' + end.format('D MMMM , YYYY'));
+        $scope.$apply(function(){
+            $scope.startDate = start;
+            $scope.endDate = end;
+        });
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           '1 Year Ago': [moment().subtract(100, 'years'), moment().subtract(1, 'years')],
+           '3 Years Ago': [moment().subtract(100, 'years'), moment().subtract(3, 'years')]
+        },
+        parentEl:'.input-group'
+    }, cb);
+
+
+  
 
 }]);
 
