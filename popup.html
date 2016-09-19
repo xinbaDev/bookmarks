@@ -2,6 +2,7 @@
 
 <html ng-app="bookmark">
 <head>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome-4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/ngDialog.css">
@@ -9,6 +10,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/toggle.css">
 <link rel="stylesheet" href="css/daterangepicker.css">
+
 
 </head>
 <body class="body">
@@ -26,34 +28,37 @@
 <div ng-controller="bookmarkCtrl">
 
 	<div class="input-group">
-				
 
-			<div class="input-group-addon btn" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
+			<div class="input-group-addon btn_toggle" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
 		
 				<i class="fa fa-search"></i>
-				<span class="caret"></span>
+				<i ng-show="!isOpen" class="fa fa-angle-right"></i>
+				<i ng-show="isOpen" class="fa fa-angle-left"></i>
 
 			</div>
 
 
-			<div id="reportrange" ng-show="timeChecked" class="pull-right bookmark-calendar" >
-			    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
+			<div class="toggle-menu" ng-if="isOpen">
+			    <li><div class="btn_toggle" ng-click="titleClick()"><i class="fa fa-bookmark"></i> Title<i ng-show="titleChecked" class="fa fa-check"></i></div></li>
+			    <li><div class="btn_toggle" ng-click="urlClick()"><i class="fa fa-link"></i> URL<i ng-show="urlChecked" class="fa fa-check"></i></div></li>
+			    <li><div class="btn_toggle" ng-click="timeClick()"><i class="fa fa-calendar"></i> Time<i ng-show="timeChecked" class="fa fa-check"></i></div></li>
 			</div>
 
-			<div class="toggle-menu" ng-show="isOpen">
-				    <li><a class="btn" ng-click="titleClick()"><i ng-show="titleChecked" class="fa fa-check"></i>Title</a></li>
-				    <li><a class="btn" ng-click="urlClick()"><i ng-show="urlChecked" class="fa fa-check"></i>URL</a></li>
-				    <li><a class="btn" ng-click="timeClick()"><i ng-show="timeChecked" class="fa fa-check"></i>Time</a></li>
-			</div>
+			<table ng-show="timeChecked">
+				<td>
+					<div id="reportrange" class="pull-right bookmark-calendar" >
+					    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
+					</div>
+				</td>
+			</table>
+
+
 
 
 			<table ng-show="!timeChecked">
 
 				<td>
-					<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}">
-				</td>
-				<td>
-					<button class="btn btn-primary" ng-click="focusOnText();searchText=''">Clear</button>
+					<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}" clear-btn>
 				</td>
 
 			</table>
@@ -94,7 +99,7 @@
 		</table>
 	</div>
 
-	<div ng-if="timeChecked" id="bookmark_scrollable">
+	<div ng-if="isSearchByDate" id="bookmark_scrollable">
 		<table>
 			<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
 				<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
@@ -138,6 +143,7 @@
   <script src="js/moment.min.js"></script>
   <script src="js/daterangepicker.js"></script>
   <script src="js/ngDialog.js"></script>
+  <script src="js/materialize.min.js"></script>
 
   <script src="js/utility.js"></script>
   <script src="js/bookmarkModel.js"></script>

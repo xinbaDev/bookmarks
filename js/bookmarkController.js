@@ -4,14 +4,16 @@ var bookmarkManager = new bookmarkModel.bookmark();
 
 var app = angular.module('bookmark', ['ngDialog']);
 
+
 app.constant('bookmarkManager', bookmarkManager);
 
-app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function($scope,bookmarkManager,searchDate,ngDialog) {
+app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function($scope,bookmarkManager,ngDialog) {
     
     $scope.sortType      = 'dateAdded';
     $scope.bookmarkLists = [];
     $scope.titleChecked  = true;
     $scope.sortReverse   = true;
+    $scope.status        = [];
 
     if(bookmarkManager.numOfBooks() == 0){
         chrome.bookmarks.getTree(getBookmarksCallback);
@@ -24,6 +26,46 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
             $scope.bookmarkLists = bookmarkManager.returnBookmarks();
         });
     }
+
+    var DateRangeSetUp = function(){
+        var start = moment().subtract(7, 'days');
+        var end = moment();
+        this.scope = $scope;
+        that = this;
+
+
+        function cb(start, end) {
+
+            $('#reportrange span').html(start.format('D MMMM , YYYY') + ' - ' + end.format('D MMMM , YYYY'));
+
+            console.log(that.scope);
+            that.scope.$apply(function(){
+                that.scope.startDate = start;
+                that.scope.endDate = end;
+                that.scope.isSearchByDate = true;
+            });
+        }
+
+        this.setScope = function(scope){
+            that.scope = scope;
+        };
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'Last 365 Days': [moment().subtract(1, 'years'), moment()],
+               '3 Years Ago': [moment().subtract(100, 'years'), moment().subtract(3, 'years')]
+            },
+            parentEl:'.input-group'
+        }, cb);
+    }
+
+    dataRange = new DateRangeSetUp();
 
 
     $scope.isNotEmpty = function(searchText){
@@ -56,6 +98,8 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
             function(value) {
                 ngDialog.close();
             });
+
+        dataRange.setScope($scope);
     }
 
     $scope.getNumberOfBookMarks = function(){
@@ -90,6 +134,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
         $scope.timeChecked = false;
         $scope.isOpen = false;
         $scope.filterField = "title";
+        $scope.isSearchByDate = false;
     }
 
     $scope.urlClick = function(){
@@ -98,6 +143,8 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
         $scope.timeChecked = false;
         $scope.isOpen = false;
         $scope.filterField = "url";
+        $scope.isSearchByDate = true;
+        $scope.isSearchByDate = false;
     }
 
     $scope.timeClick = function(){
@@ -106,7 +153,8 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
         $scope.timeChecked = true;
         $scope.isOpen = false;
         $scope.filterField = "time";
-        
+        $scope.searchText = "";
+
 
     }
 
@@ -136,37 +184,37 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
     }
 
 
-
-
-
-    var start = moment().subtract(7, 'days');
-    var end = moment();
-
-    function cb(start, end) {
-
-        $('#reportrange span').html(start.format('D MMMM , YYYY') + ' - ' + end.format('D MMMM , YYYY'));
-        $scope.$apply(function(){
-            $scope.startDate = start;
-            $scope.endDate = end;
-        });
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           '1 Year Ago': [moment().subtract(100, 'years'), moment().subtract(1, 'years')],
-           '3 Years Ago': [moment().subtract(100, 'years'), moment().subtract(3, 'years')]
-        },
-        parentEl:'.input-group'
-    }, cb);
-
-
-  
-
 }]);
 
+
+app.directive('clearBtn', ['$parse', function ($parse) {
+    return {
+        link: function ($scope, elm, attr, ngModelCtrl) {
+            console.log(elm);
+
+            elm.wrap("<div style='position: relative'></div>");
+            var btn = '<i class="searchclear ng-hide fa fa-close"></i>';
+            var angularBtn = angular.element(btn);
+            angularBtn.css('top', 10);
+            elm.after(angularBtn);
+            //clear the input
+            angularBtn.on("click", function () {
+                $scope.searchText = "";
+                $scope.focusOnText();
+                angularBtn.addClass("ng-hide");
+                $scope.$apply();
+            });
+
+            // show  clear btn  on focus
+            elm.bind('focus keyup change paste propertychange', function (blurEvent) {
+                if (elm.val() && elm.val().length > 0) {
+                    angularBtn.removeClass("ng-hide");
+
+                } else {
+                    angularBtn.addClass("ng-hide");
+                }
+            });
+
+        }
+    };
+}]);
