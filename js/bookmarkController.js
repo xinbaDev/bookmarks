@@ -37,12 +37,12 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
         function cb(start, end) {
 
             $('#reportrange span').html(start.format('D MMMM , YYYY') + ' - ' + end.format('D MMMM , YYYY'));
+            scope = angular.element($('#reportrange')).scope();
 
-            console.log(that.scope);
-            that.scope.$apply(function(){
-                that.scope.startDate = start;
-                that.scope.endDate = end;
-                that.scope.isSearchByDate = true;
+            scope.$apply(function(){
+                scope.startDate = start;
+                scope.endDate = end;
+                scope.isSearchByDate = true;
             });
         }
 
@@ -98,8 +98,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
             function(value) {
                 ngDialog.close();
             });
-
-        dataRange.setScope($scope);
     }
 
     $scope.getNumberOfBookMarks = function(){
@@ -189,7 +187,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
 
 app.directive('clearBtn', ['$parse', function ($parse) {
     return {
-        link: function ($scope, elm, attr, ngModelCtrl) {
+        link: function (scope, elm, attr, ngModelCtrl) {
             console.log(elm);
 
             elm.wrap("<div style='position: relative'></div>");
@@ -199,10 +197,10 @@ app.directive('clearBtn', ['$parse', function ($parse) {
             elm.after(angularBtn);
             //clear the input
             angularBtn.on("click", function () {
-                $scope.searchText = "";
-                $scope.focusOnText();
+                scope.searchText = "";
+                scope.focusOnText();
                 angularBtn.addClass("ng-hide");
-                $scope.$apply();
+                scope.$apply();
             });
 
             // show  clear btn  on focus
