@@ -193,8 +193,10 @@ app.directive('clearBtn', ['$parse', function ($parse) {
             elm.wrap("<div style='position: relative'></div>");
             var btn = '<i class="searchclear ng-hide fa fa-close"></i>';
             var angularBtn = angular.element(btn);
+
             angularBtn.css('top', 10);
             elm.after(angularBtn);
+
             //clear the input
             angularBtn.on("click", function () {
                 scope.searchText = "";
@@ -212,6 +214,8 @@ app.directive('clearBtn', ['$parse', function ($parse) {
                     angularBtn.addClass("ng-hide");
                 }
             });
+
+
 
         }
     };

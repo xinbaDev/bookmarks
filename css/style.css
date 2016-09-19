@@ -5,11 +5,6 @@
   border-bottom: 1px #aaaaab solid;
 }
 
-.test {
-  background-image: url('../images/bookshelf_2.jpg');
-  background-size: auto;
-  height: 60px;
-}
 
 .logo {
   background-image: url('../images/logo.jpg');
@@ -52,7 +47,7 @@ table, th , td  {
 }
 
 table {
-  margin-top: 2px;
+  margin-top: 0px;
   border-collapse: separate;
   border-spacing: 1px;
 }
@@ -219,9 +214,34 @@ body.ngdialog-open{
     margin: auto;
     position: absolute!important;
     right: 10px;
-    z-index: 99999999;
+    z-index: 1001;
 }
 
 .searchclear:hover {
   color: #000;
+}
+
+.icon-calendar{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+
+.icon-link{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+.icon-bookmark{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+
+.input-group .form-control {
+
+    padding-left: 30;
 }

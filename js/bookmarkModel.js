@@ -86,8 +86,8 @@ bookmarkModel = (function(){
     }
 
     this.getTitle = function(){
-      if (this.title.length > 40)
-        return this.title.substr(0, 40) + "...";
+      if (this.title.length > 50)
+        return this.title.substr(0, 50) + "...";
       return this.title;
     }
   }

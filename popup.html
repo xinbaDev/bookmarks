@@ -29,6 +29,7 @@
 
 	<div class="input-group">
 
+
 			<div class="input-group-addon btn_toggle" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
 		
 				<i class="fa fa-search"></i>
@@ -44,6 +45,8 @@
 			    <li><div class="btn_toggle" ng-click="timeClick()"><i class="fa fa-calendar"></i> Time<i ng-show="timeChecked" class="fa fa-check"></i></div></li>
 			</div>
 
+
+
 			<table ng-show="timeChecked">
 				<td>
 					<div id="reportrange" class="pull-right bookmark-calendar" >
@@ -58,7 +61,12 @@
 			<table ng-show="!timeChecked">
 
 				<td>
-					<input id="search" class="form-control" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}" clear-btn>
+					<div style="position: relative">
+						<input id="search" class="form-control fa" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}" clear-btn>
+						<i ng-if="titleChecked" class="icon-bookmark fa fa-bookmark"></i>
+						<i ng-if="urlChecked" class="icon-link fa fa-link"></i>
+						<i ng-if="timeChecked" class="icon-calendar fa fa-calendar"></i>
+					<div>
 				</td>
 
 			</table>
