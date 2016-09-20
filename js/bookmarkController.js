@@ -1,13 +1,11 @@
 
 var bookmarkManager = new bookmarkModel.bookmark();
 
-
 var app = angular.module('bookmark', ['ngDialog']);
-
 
 app.constant('bookmarkManager', bookmarkManager);
 
-app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function($scope,bookmarkManager,ngDialog) {
+app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function($scope,bookmarkManager,ngDialog) {
     
     $scope.sortType      = 'dateAdded';
     $scope.bookmarkLists = [];
@@ -49,7 +47,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
         this.setScope = function(scope){
             that.scope = scope;
         };
-
+ 
         $('#reportrange').daterangepicker({
             startDate: start,
             endDate: end,
@@ -59,7 +57,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                'Last 365 Days': [moment().subtract(1, 'years'), moment()],
-               '3 Years Ago': [moment().subtract(100, 'years'), moment().subtract(3, 'years')]
+               'Old bookmark': [moment().subtract(100, 'years'), moment().subtract(localStorage['old_bookmark_value'], 'years')]
             },
             parentEl:'.input-group'
         }, cb);

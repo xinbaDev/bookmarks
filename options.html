@@ -9,22 +9,41 @@
 
 <body>
 
-<h3>Appearance</h3>
+	<section>
+	   <h3>Configuration</h3>
+		<div class="bookmark_option">
+		  <span >Set Old Bookmark Threshold</span>
+          <div>
+              <input type="range" id="old_bookmark" min="2" max="10" step="1"><label id="old_bookmark_value"><label>
+          </div>
+		  
+		</div>
+	</section>
 
-<div class="bookmark_option">
-  <span>Width</span>
-  <input type="range" id="window_width" min="300" max="800" step="1"><span id="width_value"><span>
-</div>
+	<div class="opition-line"></div>
 
-<div class="bookmark_option">
-  <span >Height</span>
-  <input type="range" id="window_height" min="500" max="1000" step="10"><span id="height_value"><span>
-</div>
+    <section>
+      <h3 >Privacy</h3>
+      <div class="bookmark_option">
+        <label>
+          <input type="checkbox" name="analytics" id="privacy">
+          <span>Enable Performance Analytics</span>
+        </label>
+        <div>
+          <span class="bookmark_option_desc">Anonymously report statistics to improve the tool over time.</span>
+        </div>
+      </div>
+    </section>
 
-<div class="save_section">
-<button id="save">Save</button>
-<label id="status"></label>
-</div>
+    <footer>
+
+        <a href="" class="btn rate" target="_blank"><span tr="rate5star">Rate 5 star</span></a>
+
+        <a class="filebug" href="https://github.com/xinba123/bookmarks/issues/new" target="_blank" >File a bug report</a>
+        
+
+    </footer>
+    <div> © Bookmark Helper by Xinba - Version 1.0</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="js/options.js"></script>

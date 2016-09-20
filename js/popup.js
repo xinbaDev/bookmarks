@@ -17,14 +17,6 @@ document.querySelector('#bookmark-options').addEventListener("click", function()
   }
 });
 
-chrome.storage.sync.get({
-	width: 300,
-	height: 500
-}, function(items) {
-	$('body').width(items.width);
-  $('#bookmark_scrollable').height(items.height);
-});
-
 
 
 /*var pageTracker = _gat._getTracker("UA-84474303-1");
