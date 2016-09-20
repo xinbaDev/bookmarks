@@ -188,7 +188,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog', function
 app.directive('clearBtn', ['$parse', function ($parse) {
     return {
         link: function (scope, elm, attr, ngModelCtrl) {
-            console.log(elm);
 
             elm.wrap("<div style='position: relative'></div>");
             var btn = '<i class="searchclear ng-hide fa fa-close"></i>';

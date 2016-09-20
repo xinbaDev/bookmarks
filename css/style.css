@@ -3,19 +3,38 @@
   background: linear-gradient(to bottom, #ffffff 0%, #eaeaea 100%);
   height: auto;
   border-bottom: 1px #aaaaab solid;
+
 }
 
 
 .logo {
-  background-image: url('../images/logo.jpg');
+  background-image: url('../images/icon.png');
   
   background-size: contain;
   background-repeat: no-repeat;
   height: 22px;
   width: 22px;
-/*   background-position: center center;
-border-radius: 5px; */
 }
+
+
+.row>a{
+  text-decoration: none;
+  color: #191919;
+  cursor: pointer;
+
+}
+
+.row>a:hover{
+  text-decoration: none;
+  color: #ff9c29;
+}
+.app-name{
+  font-family: "Brush Script MT", cursive;
+    font-size: 15px;
+  font-weight: 600;
+  
+}
+
  
 .body{
   width:500px;
@@ -113,6 +132,7 @@ table tr:nth-child(even) {
 @media{
   .btn{
         border-radius: 0px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 2px 5px 0 rgba(0,0,0,0.12);
   }
 }
 
@@ -189,7 +209,6 @@ body.ngdialog-open{
 .waves-effect {
     position: relative;
     cursor: pointer;
-    display: inline-block;
     overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -245,3 +264,31 @@ body.ngdialog-open{
 
     padding-left: 30;
 }
+
+
+/* .ripple{
+  overflow:hidden;
+}
+
+.ripple-effect{
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: white;
+
+    
+  animation: ripple-animation 2s;
+}
+
+
+@keyframes ripple-animation {
+    from {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    to {
+      transform: scale(100);
+      opacity: 0;
+    }
+} */

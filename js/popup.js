@@ -25,3 +25,7 @@ chrome.storage.sync.get({
   $('#bookmark_scrollable').height(items.height);
 });
 
+
+
+/*var pageTracker = _gat._getTracker("UA-84474303-1");
+pageTracker._initData();pageTracker._trackPageview();*/
