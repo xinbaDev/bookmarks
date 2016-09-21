@@ -97,8 +97,10 @@
 			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
 					
 					<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+					
 
 			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+			    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
 					<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
 			    	</div>
 			    </td>
@@ -129,8 +131,10 @@
 			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
 					
 					<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
-
+					
+					
 			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+			    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
 					<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
 			    	</div>
 			    </td>

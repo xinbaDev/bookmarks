@@ -98,6 +98,34 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
             });
     }
 
+    $scope.editBookmarks = function(id,title){
+        var paddingTop = $('body').height()/2;
+        var title = title;
+
+        ngDialog.openConfirm({ plain: true, template: '<html>'+
+          '<div class="modal-body" ng-controller="bookmarkCtrl">'+
+            '<div class="innerWrap sub-modal">'+
+              '<p class="myCenter">'+
+                '<label>New Title: </label><input style="width: 300px" ng-init="newTitle=\''+title +'\'" ng-model="newTitle" id="newTitle">'+
+              '</p>'+
+                  '<div class="row myCenter">'+
+                         '<button style="width: 70px" class="btn btn-info btn-md"  ng-click="confirm(newTitle)">  OK  </button>'+
+                          '<button style="width: 70px" class="btn btn-primary btn-md" ng-click="closeThisDialog()">Cancel</button>'+
+                  '</div>'+
+            '</div>'+
+          '</div>'+
+        '</html>'
+        , paddingTop: paddingTop}).then(       
+        function(value) {
+            bookmarkManager.editBookmarks(id,value);
+            chrome.bookmarks.update(id, {title:value});
+            ngDialog.close();
+        },
+        function(value) {
+            ngDialog.close();
+        });
+    }
+
     $scope.getNumberOfBookMarks = function(){
         var num = bookmarkManager.numOfBooks();
         if(num <= 1){

@@ -35,6 +35,14 @@ bookmarkModel = (function(){
       });
     }
 
+    this.editBookmarks = function(id,newTitle){
+      _this.bookObjList.forEach(function(d,i){
+        if(d.id == id){
+          _this.bookObjList[i].title = newTitle;
+        }
+      });
+    }
+
     this.numOfBooks = function(){
       return this.bookObjList.length;
     }
