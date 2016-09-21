@@ -1,13 +1,13 @@
 {
   "name": "Bookmark Helper",
-  "version": "0.1",
-  "description": "A browser action with a popup dump of all bookmarks, including search, add, edit and delete.",
+  "version": "0.2.0",
+  "description": "Having trouble managing hundreds of bookmarks? This chrome app is for you!",
   "permissions": [
     "bookmarks",
     "storage" 
   ],
   "browser_action": {
-      "default_title": "My Bookmarks",
+      "default_title": "Bookmark Helper",
       "default_icon": "icon.png",
       "default_popup": "popup.html"
   },

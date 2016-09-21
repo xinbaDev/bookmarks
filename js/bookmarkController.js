@@ -85,9 +85,25 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
 
     $scope.deleteBookmarks = function(id){
 
-        var paddingTop = $('body').height()/2;
+        var paddingTop = $('#bookmark_main').height()/4;
+        if(paddingTop<30){
+            paddingTop = 1;
+        }
 
-        ngDialog.openConfirm({template: 'confirm.html', paddingTop: paddingTop}).then(       
+        ngDialog.openConfirm({ plain: true, template: '<html>'+
+              '<div class="modal-body" ng-controller="bookmarkCtrl">'+
+                '<div class="innerWrap sub-modal">'+
+                  '<p class="myCenter">'+
+                    'Do you want to delete this bookmark?'+
+                  '</p>'+
+                      '<div class="row myCenter">'+
+                              '<button class="btn btn-danger" style="width: 70px" ng-click="confirm()">Delete</button>'+
+                              '<button class="btn btn-primary" style="width: 70px" ng-click="closeThisDialog()">Cancel</button>'+
+                      '</div>'+
+                '</div>'+
+              '</div>'+
+            '</html>'
+            , paddingTop: paddingTop, height: "110px"}).then(       
             function(value) {
                 bookmarkManager.deleteBookmarks(id);
                 chrome.bookmarks.remove(id);
@@ -99,7 +115,11 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
     };
 
     $scope.editBookmarks = function(id,title){
-        var paddingTop = $('body').height()/2;
+    
+        var paddingTop = $('#bookmark_main').height()/4;
+        if(paddingTop<30){
+            paddingTop = 1;
+        }
 
         ngDialog.openConfirm({ plain: true, template: '<html>'+
           '<div class="modal-body" ng-controller="bookmarkCtrl">'+
@@ -108,13 +128,13 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
                 '<label>New Title: </label><input style="width: 300px" ng-init="newTitle=\''+title +'\'" ng-model="newTitle" id="newTitle">'+
               '</p>'+
                   '<div class="row myCenter">'+
-                         '<button style="width: 70px" class="btn btn-info btn-md"  ng-click="confirm(newTitle)">  OK  </button>'+
-                          '<button style="width: 70px" class="btn btn-primary btn-md" ng-click="closeThisDialog()">Cancel</button>'+
+                         '<button style="width: 70px" class="btn btn-info"  ng-click="confirm(newTitle)">  OK  </button>'+
+                          '<button style="width: 70px" class="btn btn-primary" ng-click="closeThisDialog()">Cancel</button>'+
                   '</div>'+
             '</div>'+
           '</div>'+
         '</html>'
-        , paddingTop: paddingTop}).then(       
+        , paddingTop: paddingTop, height: "110px"}).then(       
         function(value) {
             bookmarkManager.editBookmarks(id,value);
             chrome.bookmarks.update(id, {title:value});

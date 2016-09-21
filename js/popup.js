@@ -16,3 +16,9 @@ document.querySelector('#bookmark-options').addEventListener("click", function()
     window.open(chrome.runtime.getURL('options.html'));
   }
 });
+
+
+document.querySelector('.app-name').addEventListener("click", function() {
+	chrome.tabs.create({url: "https://chrome.google.com/webstore/detail/bookmark-helper/anfdnhenkombplichcifaiecpcfifhdp/"});
+});
+

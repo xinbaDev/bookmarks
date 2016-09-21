@@ -8,7 +8,12 @@ function restore_options() {
     privacy:true,
   }, function(items) {
     document.getElementById('old_bookmark').value = items.old_bookmark_value;
-    $('#old_bookmark_value').text(items.old_bookmark_value + " years ago");
+    if(items.old_bookmark_value == 1){
+        $('#old_bookmark_value').text("1 year ago");
+    }else{
+        $('#old_bookmark_value').text(items.old_bookmark_value + " years ago");
+    }
+
     $('#privacy').attr('checked',items.privacy);
     
   });
@@ -18,7 +23,12 @@ document.addEventListener('DOMContentLoaded', restore_options);
 
 
 $('#old_bookmark').on("input change", function() {
-    $('#old_bookmark_value').text(this.value + " years ago");
+    if(this.value == 1){
+        $('#old_bookmark_value').text("1 year ago");
+    }else{
+        $('#old_bookmark_value').text(this.value + " years ago");
+    }
+    
     localStorage['old_bookmark_value'] = this.value;
     chrome.storage.sync.set({
         old_bookmark_value: this.value,
