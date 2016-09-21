@@ -1,5 +1,5 @@
 {
-  "name": "My Bookmarks",
+  "name": "Bookmark Helper",
   "version": "0.1",
   "description": "A browser action with a popup dump of all bookmarks, including search, add, edit and delete.",
   "permissions": [

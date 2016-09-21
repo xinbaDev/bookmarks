@@ -16,8 +16,3 @@ document.querySelector('#bookmark-options').addEventListener("click", function()
     window.open(chrome.runtime.getURL('options.html'));
   }
 });
-
-
-
-/*var pageTracker = _gat._getTracker("UA-84474303-1");
-pageTracker._initData();pageTracker._trackPageview();*/

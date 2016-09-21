@@ -1,20 +1,9 @@
-/*
- * bookmark.model.js
- * Model module
-*/
 
-/*jslint         browser : true, continue : true,
-  devel  : true, indent  : 2,    maxerr   : 50,
-  newcap : true, nomen   : true, plusplus : true,
-  regexp : true, sloppy  : true, vars     : false,
-  white  : true
-*/
 
 bookmarkModel = (function(){
   'use strict';
-  
+
   var BookList = function(){
-    
     this.bookObjList = [];
 
     var _this = this;
@@ -50,8 +39,10 @@ bookmarkModel = (function(){
     this._recurGetChildren = function(bookMark){
         if (bookMark.hasOwnProperty("url")){
             var importance = _this._getImportance(bookMark.title);
-            if(importance) bookMark.title = bookMark.title.slice(0,-15);
-            
+            if(importance) {
+              bookMark.title = bookMark.title.slice(0,-15);
+            }
+          
             var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded), importance);
             _this.bookObjList.push(book);
         }

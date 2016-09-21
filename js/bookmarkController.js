@@ -47,7 +47,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         this.setScope = function(scope){
             that.scope = scope;
         };
- 
+
         $('#reportrange').daterangepicker({
             startDate: start,
             endDate: end,
@@ -61,7 +61,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
             },
             parentEl:'.input-group'
         }, cb);
-    }
+    };
 
     dataRange = new DateRangeSetUp();
 
@@ -72,16 +72,16 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         }else{
             return false;
         }
-    }
+    };
 
 
     $scope.openLink = function(url){
        chrome.tabs.create({url: url});
-    }
+    };
 
     $scope.focusOnText = function(){
         $('#search').focus();
-    }
+    };
 
     $scope.deleteBookmarks = function(id){
 
@@ -96,11 +96,10 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
             function(value) {
                 ngDialog.close();
             });
-    }
+    };
 
     $scope.editBookmarks = function(id,title){
         var paddingTop = $('body').height()/2;
-        var title = title;
 
         ngDialog.openConfirm({ plain: true, template: '<html>'+
           '<div class="modal-body" ng-controller="bookmarkCtrl">'+
@@ -124,7 +123,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         function(value) {
             ngDialog.close();
         });
-    }
+    };
 
     $scope.getNumberOfBookMarks = function(){
         var num = bookmarkManager.numOfBooks();
@@ -136,20 +135,20 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
 
 
 
-    }
+    };
 
     $scope.changeImportance = function(book){
 
         var id = book.getID();
 
         if(book.isImportant){
-            chrome.bookmarks.update(id,{"title":book.title});
+            chrome.bookmarks.update(id,{title:book.title});
         }else{
-            chrome.bookmarks.update(id,{"title":book.title + "[__IMPORTANT__]"});
+            chrome.bookmarks.update(id,{title:book.title + "[__IMPORTANT__]"});
         }
 
         book.isImportant=!book.isImportant;
-    }
+    };
 
 
     $scope.titleClick = function(){
@@ -159,7 +158,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         $scope.isOpen = false;
         $scope.filterField = "title";
         $scope.isSearchByDate = false;
-    }
+    };
 
     $scope.urlClick = function(){
         $scope.titleChecked = false;
@@ -169,7 +168,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         $scope.filterField = "url";
         $scope.isSearchByDate = true;
         $scope.isSearchByDate = false;
-    }
+    };
 
     $scope.timeClick = function(){
         $scope.titleChecked = false;
@@ -178,9 +177,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         $scope.isOpen = false;
         $scope.filterField = "time";
         $scope.searchText = "";
-
-
-    }
+    };
 
     $scope.bySearchText = function(searchText) {
 
@@ -203,7 +200,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
     $scope.bySearchDate = function() {
 
         return function(bookmark) {
-                return (($scope.startDate < bookmark.dateAdded) && (bookmark.dateAdded <= $scope.endDate));
+            return (($scope.startDate < bookmark.dateAdded) && (bookmark.dateAdded <= $scope.endDate));
         }
     }
 
