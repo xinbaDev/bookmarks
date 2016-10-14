@@ -56,7 +56,7 @@ bookmarkModel = (function(){
 
     this._getImportance = function(title){
       var mark = title.slice(title.length-15, title.length);
-      if(mark == "[__IMPORTANT__]"){
+      if(mark == "***"){
         return true;
       }else{
         return false;

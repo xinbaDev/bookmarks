@@ -1,5 +1,5 @@
 {
-  "name": "Bookmark Helper",
+  "name": "Bookmark Assistant",
   "version": "0.2.0",
   "description": "Having trouble managing hundreds of bookmarks? This chrome app is for you!",
   "permissions": [
@@ -7,7 +7,7 @@
     "storage" 
   ],
   "browser_action": {
-      "default_title": "Bookmark Helper",
+      "default_title": "Bookmark Assistant",
       "default_icon": "icon.png",
       "default_popup": "popup.html"
   },

@@ -164,7 +164,7 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         if(book.isImportant){
             chrome.bookmarks.update(id,{title:book.title});
         }else{
-            chrome.bookmarks.update(id,{title:book.title + "[__IMPORTANT__]"});
+            chrome.bookmarks.update(id,{title:book.title + "***"});
         }
 
         book.isImportant=!book.isImportant;
