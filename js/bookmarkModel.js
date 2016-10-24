@@ -2,9 +2,11 @@
 
 bookmarkModel = (function(){
   'use strict';
+  
 
   var BookList = function(){
     this.bookObjList = [];
+    var importance_mark = "***"
 
     var _this = this;
 
@@ -40,7 +42,7 @@ bookmarkModel = (function(){
         if (bookMark.hasOwnProperty("url")){
             var importance = _this._getImportance(bookMark.title);
             if(importance) {
-              bookMark.title = bookMark.title.slice(0,-15);
+              bookMark.title = bookMark.title.slice(0,-importance_mark.length);
             }
           
             var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded), importance);
@@ -55,7 +57,7 @@ bookmarkModel = (function(){
     }
 
     this._getImportance = function(title){
-      var mark = title.slice(title.length-15, title.length);
+      var mark = title.slice(title.length-importance_mark.length, title.length);
       if(mark == "***"){
         return true;
       }else{
