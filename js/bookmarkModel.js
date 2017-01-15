@@ -39,13 +39,14 @@ bookmarkModel = (function(){
     }
 
     this._recurGetChildren = function(bookMark){
+        //console.log(bookMark);
         if (bookMark.hasOwnProperty("url")){
             var importance = _this._getImportance(bookMark.title);
             if(importance) {
               bookMark.title = bookMark.title.slice(0,-importance_mark.length);
             }
-          
-            var book = new Book(bookMark.id, bookMark.url, bookMark.title, new Date(bookMark.dateAdded), importance);
+            bookMark.favicon = "chrome://favicon/" + bookMark.url;
+            var book = new Book(bookMark.id, bookMark.url, bookMark.favicon, bookMark.title, new Date(bookMark.dateAdded), importance);
             _this.bookObjList.push(book);
         }
 
@@ -67,15 +68,20 @@ bookmarkModel = (function(){
 
   }
 
-  var Book = function(id, url, title, dateAdded, isImportant){
+  var Book = function(id, url, favicon, title, dateAdded, isImportant){
     this.id           = id;
     this.url          = url;
+    this.favicon      = favicon;
     this.title        = title;
     this.dateAdded    = dateAdded;
     this.isImportant  = isImportant;
 
     this.getID = function(){
       return this.id;
+    }
+
+    this.getFavIcon = function(){
+      return this.favicon;
     }
 
     this.getDate = function(){

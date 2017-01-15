@@ -93,6 +93,7 @@
 			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchText(searchText)">
 			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
 			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
+			    	<img src ={{bookmark.getFavIcon()}}>
 			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
 			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
 					
@@ -127,6 +128,7 @@
 			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchDate()">
 			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
 			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
+			    	<img src ={{bookmark.getFavIcon()}}>
 			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
 			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
 					

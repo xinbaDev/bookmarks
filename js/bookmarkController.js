@@ -1,7 +1,14 @@
 
 var bookmarkManager = new bookmarkModel.bookmark();
 
-var app = angular.module('bookmark', ['ngDialog']);
+var app = angular.module('bookmark', ['ngDialog']).config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {   
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome):/);
+        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+    }
+]);
 
 app.constant('bookmarkManager', bookmarkManager);
 

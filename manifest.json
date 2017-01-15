@@ -4,7 +4,8 @@
   "description": "Having trouble managing hundreds of bookmarks? This chrome app is for you!",
   "permissions": [
     "bookmarks",
-    "storage" 
+    "storage",
+    "chrome://favicon/"
   ],
   "browser_action": {
       "default_title": "Bookmark Assistant",
