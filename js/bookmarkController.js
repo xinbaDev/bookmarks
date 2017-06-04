@@ -12,7 +12,7 @@ var app = angular.module('bookmark', ['ngDialog']).config( [
 
 app.constant('bookmarkManager', bookmarkManager);
 
-app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function($scope,bookmarkManager,ngDialog) {
+app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager', 'ngDialog', function($scope,bookmarkManager,ngDialog) {
     
     $scope.sortType      = 'dateAdded';
     $scope.bookmarkLists = [];
@@ -24,11 +24,12 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         chrome.bookmarks.getTree(getBookmarksCallback);
     }
     
-
     function getBookmarksCallback(booklist){
         bookmarkManager.getBookmarks(booklist);
         $scope.$apply(function(){
             $scope.bookmarkLists = bookmarkManager.returnBookmarks();
+            $scope.bookmarkGroup = bookmarkManager.returnBookGroup();
+            console.log($scope.bookmarkGroup)
         });
     }
 
@@ -37,7 +38,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         var end = moment();
         this.scope = $scope;
         that = this;
-
 
         function cb(start, end) {
 
@@ -72,7 +72,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
 
     dataRange = new DateRangeSetUp();
 
-
     $scope.isNotEmpty = function(searchText){
         if(searchText.length != 0){
             return true;
@@ -80,7 +79,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
             return false;
         }
     };
-
 
     $scope.openLink = function(url){
        chrome.tabs.create({url: url});
@@ -177,7 +175,6 @@ app.controller('bookmarkCtrl', ['$scope', 'bookmarkManager','ngDialog',function(
         book.isImportant=!book.isImportant;
     };
 
-
     $scope.titleClick = function(){
         $scope.titleChecked = true;
         $scope.urlChecked = false;
@@ -263,9 +260,6 @@ app.directive('clearBtn', ['$parse', function ($parse) {
                     angularBtn.addClass("ng-hide");
                 }
             });
-
-
-
         }
     };
 }]);

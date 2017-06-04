@@ -28,132 +28,125 @@
 	</div>
 
 
-<div ng-controller="bookmarkCtrl" id="bookmark_main">
+	<div ng-controller="bookmarkCtrl" id="bookmark_main">
 
-	<div class="input-group">
+		<div class="input-group">
 
 
-			<div class="input-group-addon btn_toggle" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
+				<div class="input-group-addon btn_toggle" id="bookmark_toggle" ng-init="isOpen=false" ng-click="isOpen = !isOpen">
+			
+					<i class="fa fa-search"></i>
+					<i ng-show="!isOpen" class="fa fa-angle-right"></i>
+					<i ng-show="isOpen" class="fa fa-angle-left"></i>
+
+				</div>
+
+
+				<div class="toggle-menu" ng-if="isOpen">
+				    <li><div class="btn_toggle" ng-click="titleClick()"><i class="fa fa-bookmark"></i> Title<i ng-show="titleChecked" class="fa fa-check"></i></div></li>
+				    <li><div class="btn_toggle" ng-click="urlClick()"><i class="fa fa-link"></i> URL<i ng-show="urlChecked" class="fa fa-check"></i></div></li>
+				    <li><div class="btn_toggle" ng-click="timeClick()"><i class="fa fa-calendar"></i> Time<i ng-show="timeChecked" class="fa fa-check"></i></div></li>
+				</div>
+
+
+
+				<table ng-show="timeChecked">
+					<td>
+						<div id="reportrange" class="pull-right bookmark-calendar" >
+						    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
+						</div>
+					</td>
+				</table>
+
+
+
+
+				<table ng-show="!timeChecked">
+
+					<td>
+						<div style="position: relative">
+							<input id="search" class="form-control fa" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}" clear-btn>
+							<i ng-if="titleChecked" class="icon-bookmark fa fa-bookmark"></i>
+							<i ng-if="urlChecked" class="icon-link fa fa-link"></i>
+							<i ng-if="timeChecked" class="icon-calendar fa fa-calendar"></i>
+						<div>
+					</td>
+
+				</table>
+				
+		</div>
+
 		
-				<i class="fa fa-search"></i>
-				<i ng-show="!isOpen" class="fa fa-angle-right"></i>
-				<i ng-show="isOpen" class="fa fa-angle-left"></i>
 
-			</div>
-
-
-			<div class="toggle-menu" ng-if="isOpen">
-			    <li><div class="btn_toggle" ng-click="titleClick()"><i class="fa fa-bookmark"></i> Title<i ng-show="titleChecked" class="fa fa-check"></i></div></li>
-			    <li><div class="btn_toggle" ng-click="urlClick()"><i class="fa fa-link"></i> URL<i ng-show="urlChecked" class="fa fa-check"></i></div></li>
-			    <li><div class="btn_toggle" ng-click="timeClick()"><i class="fa fa-calendar"></i> Time<i ng-show="timeChecked" class="fa fa-check"></i></div></li>
-			</div>
-
-
-
-			<table ng-show="timeChecked">
-				<td>
-					<div id="reportrange" class="pull-right bookmark-calendar" >
-					    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
-					</div>
+		<div ng-if="isNotEmpty(searchText)" id="bookmark_scrollable">
+			<table>
+				<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+					<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+		            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
 				</td>
+
+				<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+					<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+		            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+				</td>
+
+				<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchText(searchText)">
+				    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
+				    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
+				    	<img src ={{bookmark.getFavIcon()}}>
+				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+				    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
+						
+						<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+						
+
+				    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+				    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
+						<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
+				    	</div>
+				    </td>
+					<td class="date_bookmark">
+						{{bookmark.getDate()}}
+					</td>
+				</tr>
+				
 			</table>
+		</div>
 
-
-
-
-			<table ng-show="!timeChecked">
-
-				<td>
-					<div style="position: relative">
-						<input id="search" class="form-control fa" ng-model="searchText" ng-init="searchText=''" placeholder="{{getNumberOfBookMarks()}}" clear-btn>
-						<i ng-if="titleChecked" class="icon-bookmark fa fa-bookmark"></i>
-						<i ng-if="urlChecked" class="icon-link fa fa-link"></i>
-						<i ng-if="timeChecked" class="icon-calendar fa fa-calendar"></i>
-					<div>
+		<div ng-if="isSearchByDate" id="bookmark_scrollable">
+			<table>
+				<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+					<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+		            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
 				</td>
 
+				<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+					<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
+		            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
+				</td>
+				
+				<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchDate()">
+				    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
+				    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
+				    	<img src ={{bookmark.getFavIcon()}}>
+				    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
+				    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
+						
+						<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+						
+						
+				    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+				    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
+						<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
+				    	</div>
+				    </td>
+					<td class="date_bookmark">
+						{{bookmark.getDate()}}
+					</td>
+				</tr>
 			</table>
-			
+		</div>
 	</div>
-
-	
-
-	<div ng-if="isNotEmpty(searchText)" id="bookmark_scrollable">
-		<table>
-			<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
-				<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-	            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-			</td>
-
-			<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-				<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-	            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-			</td>
-
-			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchText(searchText)">
-			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
-			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
-			    	<img src ={{bookmark.getFavIcon()}}>
-			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
-			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
-					
-					<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
-					
-
-			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-			    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
-					<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
-			    	</div>
-			    </td>
-				<td class="date_bookmark">
-					{{bookmark.getDate()}}
-				</td>
-			</tr>
-			
-		</table>
-	</div>
-
-	<div ng-if="isSearchByDate" id="bookmark_scrollable">
-		<table>
-			<td class="bookmarkTitle" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
-				<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-	            <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-			</td>
-
-			<td class="dateAdded" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-				<span ng-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-	            <span ng-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-			</td>
-			
-			<tr ng-repeat="bookmark in bookmarkLists|orderBy:['isImportant','dateAdded']:sortReverse|filter:bySearchDate()">
-			    <td class="title_bookmark" ng-mouseover="hoverEdit = true" ng-mouseleave="hoverEdit = false"> 
-			    	<div ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}">
-			    	<img src ={{bookmark.getFavIcon()}}>
-			    	<a href='' ng-click="openLink(bookmark.url)">{{bookmark.getTitle()}}</a> 
-			    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
-					
-					<i ng-show="bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
-					
-					
-			    	<i ng-show="hoverEdit == true" ng-click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-			    	<i ng-show="hoverEdit == true" ng-click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i>
-					<i ng-show="hoverEdit == true && !bookmark.isImportant" ng-click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i>
-			    	</div>
-			    </td>
-				<td class="date_bookmark">
-					{{bookmark.getDate()}}
-				</td>
-			</tr>
-
-			
-		</table>
-	</div>
-
-
-
-	
-</div>
-  
 </body>
 
 </html>
